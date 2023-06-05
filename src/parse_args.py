@@ -69,7 +69,7 @@ def parse_args():
     placement_group.add_argument("--above", action="store_const", dest="placement",
                                  const="above", help="Place image 2 above image 1")
     placement_group.add_argument("--below", action="store_const", dest="placement",
-                                 const="below", help="Place image 2 below image 1 (default)")
+                                 const="below", help="Place image 2 below image 1")
     placement_group.add_argument("--left", action="store_const", dest="placement",
                                  const="left", help="Place image 2 to the left of image 1")
     placement_group.add_argument("--right", action="store_const", dest="placement",
@@ -77,7 +77,7 @@ def parse_args():
     mode_group = parser_op_concat.add_mutually_exclusive_group(required=True)
     # How to handle the second image if it does not fit exactly
     mode_group.add_argument("--scale", action="store_const", dest="mode", const="scale",
-                            help="Scale the second image to match the bordering dimension of the first image (default)")
+                            help="Scale the second image to match the bordering dimension of the first image")
     mode_group.add_argument("--crop", action="store_const", dest="mode", const="crop",
                             help="Crop the second image to match the bordering dimension of the first image")
     mode_group.add_argument("--fill", action="store_const", dest="mode", const="fill",
