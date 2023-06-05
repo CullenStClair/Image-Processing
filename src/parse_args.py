@@ -44,11 +44,11 @@ def parse_args():
                                    type=positive_int, default=1, help="Number of blur passes (default: 1)")
 
     # Chain (only operations that do not require additional arguments can be chained)
-    # Valid operations: grayscale, threshold, sepia, blur, sharpen, edge, invert, mirrorV, mirrorH, rotateCW, rotateCCW, concat
+    # Valid operations: grayscale, threshold, sepia, blur, sharpen, edge, invert, mirrorV, mirrorH, rotateCW, rotateCCW
     parser_op_chain = subparsers.add_parser("chain", help="Apply multiple operations (without arguments) to the image")
     parser_op_chain.add_argument("operations", metavar="<operation>", nargs="+", help="Operations to apply in sequence",
                                  choices=["grayscale", "threshold", "sepia", "blur", "sharpen", "edge",
-                                          "invert", "mirrorV", "mirrorH", "rotateCW", "rotateCCW", "concat"])
+                                          "invert", "mirrorV", "mirrorH", "rotateCW", "rotateCCW"])
 
     # Composite
     parser_op_merge = subparsers.add_parser("composite", help="Composite an image over another")
@@ -65,22 +65,22 @@ def parse_args():
     parser_op_concat.add_argument("in_file2", metavar="<second-image-path>", default=None,
                                   nargs="?", help="File path of image to be placed next to first image (optional)")
     placement_group = parser_op_concat.add_mutually_exclusive_group(required=True)
-    # The default concatenation placement is "below"
+    # Where to place the second image relative to the first image
     placement_group.add_argument("--above", action="store_const", dest="placement",
                                  const="above", help="Place image 2 above image 1")
     placement_group.add_argument("--below", action="store_const", dest="placement",
-                                 const="below", help="Place image 2 below image 1 (default)", default="below")
+                                 const="below", help="Place image 2 below image 1 (default)")
     placement_group.add_argument("--left", action="store_const", dest="placement",
                                  const="left", help="Place image 2 to the left of image 1")
     placement_group.add_argument("--right", action="store_const", dest="placement",
                                  const="right", help="Place image 2 to the right of image 1")
     mode_group = parser_op_concat.add_mutually_exclusive_group(required=True)
-    # The default concatenation mode is "fill"
+    # How to handle the second image if it does not fit exactly
     mode_group.add_argument("--scale", action="store_const", dest="mode", const="scale",
                             help="Scale the second image to match the bordering dimension of the first image (default)")
     mode_group.add_argument("--crop", action="store_const", dest="mode", const="crop",
                             help="Crop the second image to match the bordering dimension of the first image")
-    mode_group.add_argument("--fill", action="store_const", dest="mode", const="fill", default="fill",
+    mode_group.add_argument("--fill", action="store_const", dest="mode", const="fill",
                             help="Fill unused space with the average colour of the second image")
 
     # Crop
