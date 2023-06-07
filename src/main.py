@@ -3,11 +3,12 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, UnidentifiedImageError
 
+import operations as op
 from parse_args import parse_args
 
 
 def main():
-
+    # Parse command line arguments
     args = parse_args()
 
     # Handle input file path
@@ -19,7 +20,7 @@ def main():
     # Read the input image contents into a numpy array
     try:
         with Image.open(in_file) as img:
-            img_arr = np.array(img)
+            img_arr = np.array(img, dtype="uint8")
     except FileNotFoundError:
         print(f"File not found: {in_file}")
         exit(1)
@@ -30,12 +31,43 @@ def main():
     # Check if the image has an alpha channel
     has_alpha = True if img_arr.shape[2] == 4 else False
 
-    # TODO Handle operations
-    #
-    #
-    #
+    # Perform the requested operation
+    if args.operation == "boxblur":
+        pass
+    elif args.operation == "chain":
+        pass
+    elif args.operation == "composite":
+        pass
+    elif args.operation == "concat":
+        pass
+    elif args.operation == "crop":
+        pass
+    elif args.operation == "edge":
+        pass
+    elif args.operation == "grayscale":
+        img_arr = op.grayscale(img_arr, has_alpha)
+    elif args.operation == "invert":
+        pass
+    elif args.operation == "kernel":
+        pass
+    elif args.operation == "mirrorV":
+        pass
+    elif args.operation == "mirrorH":
+        pass
+    elif args.operation == "resize":
+        pass
+    elif args.operation == "rotateCW":
+        pass
+    elif args.operation == "rotateCCW":
+        pass
+    elif args.operation == "sepia":
+        pass
+    elif args.operation == "sharpen":
+        pass
+    elif args.operation == "threshold":
+        pass
 
-    # Handle output file path
+    # Get output file path
     out_file = in_file.parent.joinpath(args.out_file)  # Output to same directory as input file
     i = 1  # If output file already exists, append number to filename
     stem = out_file.stem

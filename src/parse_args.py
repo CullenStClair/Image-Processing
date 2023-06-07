@@ -6,7 +6,7 @@ def parse_args():
 
     boxblur       [-r, --radius <blur-radius>] [-i, --iterations <iterations>]
     chain         <operation> [<operation> ...]
-    composite         <input-file-2> [-a, --alpha <alpha-value>] [-o, --offset <x-offset> <y-offset>]
+    composite     <input-file-2> [-a, --alpha <alpha-value>] [-o, --offset <x-offset> <y-offset>]
     concat        [input-file-2] {--above | --below | --left | --right} {--scale | --crop | --fill}
     crop          <x1> <y1> <x2> <y2>
     edge          [-t, --thin]
