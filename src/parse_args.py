@@ -1,8 +1,8 @@
-from argparse import ArgumentParser, ArgumentTypeError
+from argparse import ArgumentParser, ArgumentTypeError, Namespace
 
 
-def parse_args():
-    """Parse command-line arguments, handling multiple sub-commands with options:
+def parse_args() -> Namespace:
+    """Parse command-line arguments, handling multiple sub-commands with options.
 
     boxblur       [-r, --radius <blur-radius>] [-i, --iterations <iterations>]
     chain         <operation> [<operation> ...]
@@ -38,10 +38,10 @@ def parse_args():
     # Sub-commands
     # Boxblur
     parser_op_boxblur = subparsers.add_parser("boxblur", help="Blur the image with a box blur")
-    parser_op_boxblur.add_argument("-r", "--radius", metavar="<blur-radius>", type=positive_int,
+    parser_op_boxblur.add_argument("-r", "--radius", metavar="<blur-radius>", type=_positive_int,
                                    default=1, help="Radius of pixel sampling (default: 1)")
     parser_op_boxblur.add_argument("-i", "--iterations", metavar="<blur-iterations>",
-                                   type=positive_int, default=1, help="Number of blur passes (default: 1)")
+                                   type=_positive_int, default=1, help="Number of blur passes (default: 1)")
 
     # Chain (only operations that do not require additional arguments can be chained)
     # Valid operations: grayscale, threshold, sepia, blur, sharpen, edge, invert, mirrorV, mirrorH, rotateCW, rotateCCW
@@ -54,7 +54,7 @@ def parse_args():
     parser_op_merge = subparsers.add_parser("composite", help="Composite an image over another")
     parser_op_merge.add_argument("in_file2", metavar="<top-image-path>",
                                  help="File path of image to be placed over first image")
-    parser_op_merge.add_argument("-a", "--alpha", metavar="<alpha-value>", type=valid_alpha,
+    parser_op_merge.add_argument("-a", "--alpha", metavar="<alpha-value>", type=_valid_alpha,
                                  default=0.5, help="Transparency of top image [0-1] (default: 0.5)")
     parser_op_merge.add_argument("-o", "--offset", metavar="<x-offset> <y-offset>", nargs=2, type=int,
                                  default=[0, 0], help="Offset of top image from top-left corner of bottom image (default: 0 0)")
@@ -85,10 +85,12 @@ def parse_args():
 
     # Crop
     parser_op_crop = subparsers.add_parser("crop", help="Crop the image to within the given coordinates")
-    parser_op_crop.add_argument("x1", metavar="<x1>", type=non_negative_int, help="X coordinate of top-left corner")
-    parser_op_crop.add_argument("y1", metavar="<y1>", type=non_negative_int, help="Y coordinate of top-left corner")
-    parser_op_crop.add_argument("x2", metavar="<x2>", type=non_negative_int, help="X coordinate of bottom-right corner")
-    parser_op_crop.add_argument("y2", metavar="<y2>", type=non_negative_int, help="Y coordinate of bottom-right corner")
+    parser_op_crop.add_argument("x1", metavar="<x1>", type=_non_negative_int, help="X coordinate of top-left corner")
+    parser_op_crop.add_argument("y1", metavar="<y1>", type=_non_negative_int, help="Y coordinate of top-left corner")
+    parser_op_crop.add_argument("x2", metavar="<x2>", type=_non_negative_int,
+                                help="X coordinate of bottom-right corner")
+    parser_op_crop.add_argument("y2", metavar="<y2>", type=_non_negative_int,
+                                help="Y coordinate of bottom-right corner")
 
     # Edge
     parser_op_edge = subparsers.add_parser("edge", help="Apply edge detection to the image")
@@ -105,7 +107,7 @@ def parse_args():
     parser_op_kernel = subparsers.add_parser("kernel", help="Perform a convolution on the image with the given kernel")
     parser_op_kernel.add_argument("kernel_file", metavar="<kernel-file>",
                                   help="File path of kernel/matrix to use in convolution (comma-separated values in .txt/.csv)")
-    parser_op_kernel.add_argument("-i", "--iterations", metavar="<iterations>", type=positive_int, default=1,
+    parser_op_kernel.add_argument("-i", "--iterations", metavar="<iterations>", type=_positive_int, default=1,
                                   help="Number of convolution passes (default: 1)")
 
     # Mirror vertical and horizontal
@@ -114,15 +116,15 @@ def parse_args():
 
     # Resize
     parser_op_resize = subparsers.add_parser("resize", help="Resize the image to the given dimensions")
-    parser_op_resize.add_argument("width", metavar="<width>", type=positive_int, help="New image width")
-    parser_op_resize.add_argument("height", metavar="<height>", type=positive_int, help="New image height")
+    parser_op_resize.add_argument("width", metavar="<width>", type=_positive_int, help="New image width")
+    parser_op_resize.add_argument("height", metavar="<height>", type=_positive_int, help="New image height")
 
     # Rotate clockwise and counter-clockwise
     parser_op_rotateCW = subparsers.add_parser("rotateCW", help="Rotate the image 90 degrees clockwise")
-    parser_op_rotateCW.add_argument("-t", "--turns", metavar="<turns>", type=positive_int,
+    parser_op_rotateCW.add_argument("-t", "--turns", metavar="<turns>", type=_positive_int,
                                     default=1, help="Number of clockwise turns (default: 1)")
     parser_op_rotateCCW = subparsers.add_parser("rotateCCW", help="Rotate the image 90 degrees counter-clockwise")
-    parser_op_rotateCCW.add_argument("-t", "--turns", metavar="<turns>", type=positive_int,
+    parser_op_rotateCCW.add_argument("-t", "--turns", metavar="<turns>", type=_positive_int,
                                      default=1, help="Number of counter-clockwise turns (default: 1)")
 
     # Sepia
@@ -131,7 +133,7 @@ def parse_args():
     # Sharpen
     parser_op_sharpen = subparsers.add_parser("sharpen", help="Sharpen the image")
     parser_op_sharpen.add_argument("-s", "--strength", metavar="<multiplier>",
-                                   type=positive_float, default=5, help="Sharpening strength multiplier (default: 5)")
+                                   type=_positive_float, default=5, help="Sharpening strength multiplier (default: 5)")
 
     # Threshold
     parser_op_threshold = subparsers.add_parser("threshold", help="Threshold filter the image")
@@ -143,33 +145,45 @@ def parse_args():
     return parser.parse_args()
 
 
-def non_negative_int(value):
+def _non_negative_int(value):
     """Check that the value is a non-negative integer"""
-    ivalue = int(value)
+    try:
+        ivalue = int(value)
+    except ValueError:
+        raise ArgumentTypeError(f"'{value}' is an invalid non-negative int value")
     if ivalue < 0:
-        raise ArgumentTypeError("%s is an invalid non-negative int value" % value)
+        raise ArgumentTypeError(f"'{value}' is an invalid non-negative int value")
     return ivalue
 
 
-def positive_int(value):
+def _positive_int(value):
     """Check that the value is a positive integer"""
-    ivalue = int(value)
+    try:
+        ivalue = int(value)
+    except ValueError:
+        raise ArgumentTypeError(f"'{value}' is an invalid positive int value")
     if ivalue <= 0:
-        raise ArgumentTypeError("%s is an invalid positive int value" % value)
+        raise ArgumentTypeError(f"'{value}' is an invalid positive int value")
     return ivalue
 
 
-def positive_float(value):
+def _positive_float(value):
     """Check that the value is a positive float"""
-    fvalue = float(value)
+    try:
+        fvalue = float(value)
+    except ValueError:
+        raise ArgumentTypeError(f"'{value}' is an invalid positive float value")
     if fvalue <= 0:
-        raise ArgumentTypeError("%s is an invalid positive float value" % value)
+        raise ArgumentTypeError(f"'{value}' is an invalid positive float value")
     return fvalue
 
 
-def valid_alpha(value):
+def _valid_alpha(value):
     """Check that the value is a float in the range [0, 1]"""
-    fvalue = float(value)
+    try:
+        fvalue = float(value)
+    except ValueError:
+        raise ArgumentTypeError(f"'{value}' is an invalid alpha value (must be in range [0, 1])")
     if fvalue < 0 or fvalue > 1:
-        raise ArgumentTypeError("%s is an invalid alpha value (must be in range [0, 1])" % value)
+        raise ArgumentTypeError(f"'{value}' is an invalid alpha value (must be in range [0, 1])")
     return fvalue
