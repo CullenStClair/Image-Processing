@@ -1,6 +1,6 @@
 #  Copyright (C) 2023  Cullen St-Clair
 #  Licensed Under the GNU GPL v3.0 License
-#  See LICENSE.txt for more information
+#  See LICENSE for more information
 
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
 
@@ -27,7 +27,7 @@ def parse_args() -> Namespace:
     threshold     [-t, --threshold <threshold-value>] [-i, --invert]
     """
 
-    parser = ArgumentParser(description="Simple image processing")
+    parser = ArgumentParser(description="A python program for image processing.")
 
     # Common required arguments
     parser.add_argument("in_file", metavar="<image-path>", help="Input image file path")
