@@ -4,3 +4,5 @@
 
 from .crop import crop
 from .grayscale import grayscale
+from .mirror import mirror
+from .rotate import rotate

@@ -87,6 +87,7 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace) -> np.ndar
     Returns:
         np.ndarray: The image array after the operation has been performed
     """
+
     print(f"Performing operation: {op_name}")
 
     match op_name:
@@ -117,20 +118,20 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace) -> np.ndar
         case "kernel":
             pass
 
-        case "mirrorV":
-            pass
-
         case "mirrorH":
-            pass
+            img = op.mirror(img)
+
+        case "mirrorV":
+            img = op.mirror(img, vertical=True)
 
         case "resize":
             pass
 
         case "rotateCW":
-            pass
+            img = op.rotate(img, args.turns)
 
         case "rotateCCW":
-            pass
+            img = op.rotate(img, args.turns, CCW=True)
 
         case "sepia":
             pass
@@ -142,8 +143,7 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace) -> np.ndar
             pass
 
         case _:
-            print(f"Unrecognized operation: {op_name}")
-            exit(1)
+            raise ValueError(f"Unrecognized operation: {op_name}")
 
     return img
 

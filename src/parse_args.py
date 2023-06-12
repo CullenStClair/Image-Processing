@@ -17,8 +17,8 @@ def parse_args() -> Namespace:
     grayscale     
     invert
     kernel        <kernel-file> [-i, --iterations <iterations>]
-    mirrorV
     mirrorH
+    mirrorV
     resize        <width> <height>
     rotateCW      [-t, --turns <turns>]
     rotateCCW     [-t, --turns <turns>]
@@ -115,8 +115,8 @@ def parse_args() -> Namespace:
                                   help="Number of convolution passes (default: 1)")
 
     # Mirror vertical and horizontal
-    parser_op_mirrorV = subparsers.add_parser("mirrorV", help="Mirror the image about the vertical axis")
-    parser_op_mirrorH = subparsers.add_parser("mirrorH", help="Mirror the image about the horizontal axis")
+    parser_op_mirrorH = subparsers.add_parser("mirrorH", help="Mirror the image horizontally")
+    parser_op_mirrorV = subparsers.add_parser("mirrorV", help="Mirror the image vertically")
 
     # Resize
     parser_op_resize = subparsers.add_parser("resize", help="Resize the image to the given dimensions")
