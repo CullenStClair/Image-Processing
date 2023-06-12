@@ -28,13 +28,19 @@ def crop(img: np.ndarray, x1: int, y1: int, x2: int, y2: int) -> np.ndarray:
 
     # Validate coordinates
     if x1 < 0 or y1 < 0 or x1 > width or y1 > height:
-        raise ValueError(f"Invalid top left coordinates: ({x1}, {y1})")
+        raise ValueError(f"Invalid coordinates: ({x1}, {y1}) is out of bounds")
 
     elif x2 < 0 or y2 < 0 or x2 > width or y2 > height:
-        raise ValueError(f"Invalid bottom right coordinates: ({x2}, {y2})")
+        raise ValueError(f"Invalid coordinates: ({x2}, {y2}) is out of bounds")
 
     elif x1 > x2 or y1 > y2:
         raise ValueError(f"Invalid coordinates: ({x1}, {y1}) is not above and to the left of ({x2}, {y2})")
 
-    # Crop the image (first dimension is height-wise, second is width-wise)
-    return img[y1:y2 + 1, x1:x2 + 1]
+    elif x1 == x2:
+        raise ValueError(f"Invalid coordinates: sprecified region has a width of 0 pixels")
+
+    elif y1 == y2:
+        raise ValueError(f"Invalid coordinates: sprecified region has a height of 0 pixels")
+
+    else:
+        return img[y1:y2, x1:x2]  # first dimension is height-wise, second is width-wise
