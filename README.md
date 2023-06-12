@@ -85,9 +85,9 @@ If you try the program and would like to report a bug, you are welcome to open a
 
 Copyright (C) 2023  Cullen St-Clair  
 
-Take a look at the [LICENSE](https://github.com/CullenStClair/img-editor/LICENSE) file.
+Take a look at the [LICENSE](https://github.com/CullenStClair/img-editor/blob/master/LICENSE) file.
 
 ## Acknowledgements
 
 Test images from [Pexels](https://www.pexels.com/).  
-Please see the [ATTRIBUTIONS](https://github.com/CullenStClair/img-editor/ATTRIBUTIONS) file.
+Please see the [ATTRIBUTIONS](https://github.com/CullenStClair/img-editor/blob/master/ATTRIBUTIONS.md) file.
