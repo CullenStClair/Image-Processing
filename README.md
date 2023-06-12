@@ -89,5 +89,5 @@ Take a look at the [LICENSE](https://github.com/CullenStClair/img-editor/blob/ma
 
 ## Acknowledgements
 
-Test images from [Pexels](https://www.pexels.com/).  
+Test images graciously provided by [Pexels](https://www.pexels.com/).  
 Please see the [ATTRIBUTIONS](https://github.com/CullenStClair/img-editor/blob/master/ATTRIBUTIONS.md) file.
