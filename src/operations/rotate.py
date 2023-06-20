@@ -5,7 +5,7 @@
 import numpy as np
 
 
-def rotate(img: np.ndarray, turns: int = 1, CCW: bool = False) -> np.ndarray:
+def rotate(img: np.ndarray, turns: int = 1, ccw: bool = False) -> np.ndarray:
     """Rotates the image in 90 degree increments.
 
     Args:
@@ -18,7 +18,7 @@ def rotate(img: np.ndarray, turns: int = 1, CCW: bool = False) -> np.ndarray:
     """
 
     # If rotating CW, negate turns (np.rot90 rotates CCW by default)
-    if not CCW:
+    if not ccw:
         turns = -turns
 
     return np.rot90(img, turns)

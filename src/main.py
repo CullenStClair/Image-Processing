@@ -80,7 +80,7 @@ def main():
         exit(1)
 
 
-def perform_operation(img: np.ndarray, op_name: str, args: Namespace) -> np.ndarray:
+def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> np.ndarray:
     """Performs the requested operation on the image array.
 
     Args:
@@ -92,11 +92,18 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace) -> np.ndar
         np.ndarray: The image array after the operation has been performed
     """
 
+    # use default arguments if none are provided (only the case for chain operations)
+    # this allows the perform_operation function to be re-used for the chain operation
+    # argparse already rejects unsupported chain operations, so no need to check for them here
+
     print(f"Performing operation: {op_name}")
 
     match op_name:
         case "boxblur":
-            img = op.box_blur(img, args.radius, args.passes)
+            if args is None:
+                img = op.box_blur(img)
+            else:
+                img = op.box_blur(img, args.radius, args.passes)
 
         case "chain":
             pass
@@ -132,10 +139,16 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace) -> np.ndar
             pass
 
         case "rotateCW":
-            img = op.rotate(img, args.turns)
+            if args is None:
+                img = op.rotate(img)
+            else:
+                img = op.rotate(img, args.turns)
 
         case "rotateCCW":
-            img = op.rotate(img, args.turns, CCW=True)
+            if args is None:
+                img = op.rotate(img, ccw=True)
+            else:
+                img = op.rotate(img, args.turns, ccw=True)
 
         case "sepia":
             pass

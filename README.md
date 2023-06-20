@@ -54,7 +54,7 @@ List all available operations
   python src/main.py --help
 ```
 
-Show arguments for a given operation
+Show usage and details for a given operation
 
 ```bash
   python src/main.py <in-file-path> <out-file-name> <operation> --help
@@ -81,5 +81,5 @@ Take a look at the [LICENSE](https://github.com/CullenStClair/img-editor/blob/ma
 
 ## Contributing
 
-Since this is a personal showcase project, please do not submit pull requests.  
+Since this is a personal project, please do not submit pull requests.  
 If you try the program and would like to report a bug, you are welcome to open an issue.
