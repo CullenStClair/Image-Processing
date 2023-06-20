@@ -6,7 +6,7 @@ import numpy as np
 
 
 def grayscale(img: np.ndarray) -> np.ndarray:
-    """Converts the image to grayscale using an unweighted average of colour channels.
+    """Converts the image to grayscale.
 
     Args:
         img (np.ndarray): The image to convert to grayscale
@@ -16,11 +16,11 @@ def grayscale(img: np.ndarray) -> np.ndarray:
         np.ndarray: The grayscale image
     """
 
-    # Average of all colour channels weighted equally for simple grayscale
-    gray = np.mean(img[..., :3], axis=2)
+    # Average of all colour channels weighted equally for simple grayscale (naive)
+    # gray = np.mean(img[..., :3], axis=2)
 
-    # Altenative for gamma-corrected grayscale (weighted channels)
-    # gray = np.dot(img[..., :3], [0.2989, 0.5870, 0.1140])
+    # Gamma-corrected grayscale (weighted colour channels, vectorized for speed)
+    gray = np.dot(img[..., :3], [0.2989, 0.5870, 0.1140])
 
     # Add the alpha channel back in if necessary
     if img.shape[2] == 4:

@@ -39,7 +39,9 @@ def main():
     try:
         with Image.open(in_file) as img_file:
             img = np.array(img_file, dtype="uint8")
-            print(f"Loaded image: {in_file.name} ({img.shape[1]}x{img.shape[0]}), {in_file.stat().st_size} bytes")
+            file_size = round(in_file.stat().st_size / 1024, 1)
+            print(f"Loaded image: {in_file.name} ({img.shape[1]}x{img.shape[0]}), {file_size} KB")
+
     except UnidentifiedImageError:
         print(f"File is not a valid image: {in_file}")
         exit(1)
@@ -47,6 +49,7 @@ def main():
     # Perform the requested operation(s)
     try:
         img = perform_operation(img, args.operation, args)
+
     except ValueError as e:
         print("[ERROR]", e)
         print("Use the --help flag for usage information")
@@ -65,10 +68,13 @@ def main():
     try:
         with Image.fromarray(img) as img_file:
             img_file.save(out_file)
-        print(f"Saved image: {out_file.name} ({img.shape[1]}x{img.shape[0]}), {out_file.stat().st_size} bytes")
+            file_size = round(out_file.stat().st_size / 1024, 1)
+            print(f"Saved image: {out_file.name} ({img.shape[1]}x{img.shape[0]}), {file_size} KB")
+
     except ValueError:
         print(f"Unrecognized output format: {out_file.suffix}")
         exit(1)
+
     except OSError:
         print(f"Unable to save file: {out_file}")
         if img.shape[2] == 4:  # Check if image has alpha channel
@@ -92,7 +98,11 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace) -> np.ndar
 
     match op_name:
         case "boxblur":
-            pass
+            if args.radius > 5:
+                raise ValueError("Radius should be at most 5")
+            kernel_size = args.radius * 2 + 1
+            kernel = np.ones((kernel_size, kernel_size)) / (kernel_size ** 2)
+            img = op.convolve(img, kernel, args.iterations)
 
         case "chain":
             pass

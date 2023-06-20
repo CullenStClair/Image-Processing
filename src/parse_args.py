@@ -12,11 +12,11 @@ def parse_args() -> Namespace:
     chain         <operation> [<operation> ...]
     composite     <input-file-2> [-a, --alpha <alpha-value>] [-o, --offset <x-offset> <y-offset>]
     concat        [input-file-2] {--above | --below | --left | --right} {--scale | --crop | --fill}
+    convolve        <kernel-file> [-i, --iterations <iterations>]
     crop          <x1> <y1> <x2> <y2>
     edge          [-t, --thin]
     grayscale     
     invert
-    kernel        <kernel-file> [-i, --iterations <iterations>]
     mirrorH
     mirrorV
     resize        <width> <height>
@@ -43,7 +43,7 @@ def parse_args() -> Namespace:
     # Boxblur
     parser_op_boxblur = subparsers.add_parser("boxblur", help="Blur the image with a box blur")
     parser_op_boxblur.add_argument("-r", "--radius", metavar="<blur-radius>", type=_positive_int,
-                                   default=1, help="Radius of pixel sampling (default: 1)")
+                                   default=1, help="Radius of pixel sampling (default: 1, max: 5)")
     parser_op_boxblur.add_argument("-i", "--iterations", metavar="<blur-iterations>",
                                    type=_positive_int, default=1, help="Number of blur passes (default: 1)")
 
@@ -87,6 +87,14 @@ def parse_args() -> Namespace:
     mode_group.add_argument("--fill", action="store_const", dest="mode", const="fill",
                             help="Fill unused space with the average colour of the second image")
 
+    # Convolve
+    parser_op_convolve = subparsers.add_parser(
+        "convolve", help="Perform a convolution on the image with the given 2d kernel")
+    parser_op_convolve.add_argument("kernel_file", metavar="<kernel-file>",
+                                    help="File path of 2d kernel to use in convolution (comma-separated values in .txt/.csv)")
+    parser_op_convolve.add_argument("-i", "--iterations", metavar="<iterations>", type=_positive_int, default=1,
+                                    help="Number of convolution passes (default: 1)")
+
     # Crop
     parser_op_crop = subparsers.add_parser("crop", help="Crop the image to within the given coordinates")
     parser_op_crop.add_argument("x1", metavar="<x1>", type=_non_negative_int, help="X coordinate of top-left corner")
@@ -106,13 +114,6 @@ def parse_args() -> Namespace:
 
     # Invert
     parser_op_invert = subparsers.add_parser("invert", help="Invert the image colours")
-
-    # Kernel
-    parser_op_kernel = subparsers.add_parser("kernel", help="Perform a convolution on the image with the given kernel")
-    parser_op_kernel.add_argument("kernel_file", metavar="<kernel-file>",
-                                  help="File path of kernel/matrix to use in convolution (comma-separated values in .txt/.csv)")
-    parser_op_kernel.add_argument("-i", "--iterations", metavar="<iterations>", type=_positive_int, default=1,
-                                  help="Number of convolution passes (default: 1)")
 
     # Mirror vertical and horizontal
     parser_op_mirrorH = subparsers.add_parser("mirrorH", help="Mirror the image horizontally")
