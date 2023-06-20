@@ -21,7 +21,9 @@ import numpy as np
 from PIL import Image, UnidentifiedImageError
 
 import operations as op
-from parse_args import parse_args
+
+from .parse_args import parse_args
+from .utils import get_file_size
 
 
 def main():
@@ -163,29 +165,6 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
             raise ValueError(f"Unrecognized operation: {op_name}")
 
     return img
-
-
-def get_file_size(file: Path) -> str:
-    """Returns the size of a file in relevant units.
-
-    Args:
-        file (Path): The file to get the size of
-
-    Returns:
-        str: The size of the file in relevant units
-    """
-    if not file.is_file():
-        raise ValueError(f"File not found: {file}")
-
-    size = file.stat().st_size
-    if size < 1024:
-        return f"{size} B"
-    elif size < 1024 ** 2:
-        return f"{round(size / 1024, 1)} KB"
-    elif size < 1024 ** 3:
-        return f"{round(size / 1024 ** 2, 1)} MB"
-    else:
-        return f"{round(size / 1024 ** 3, 1)} GB"
 
 
 if __name__ == "__main__":
