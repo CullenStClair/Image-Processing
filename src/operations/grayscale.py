@@ -27,5 +27,5 @@ def grayscale(img: np.ndarray) -> np.ndarray:
         alpha = img[..., 3]
         gray = np.dstack((gray, gray, gray, alpha))
 
-    # Convert back to uint8 from float64
+    # Convert back to uint8
     return gray.astype(np.uint8)

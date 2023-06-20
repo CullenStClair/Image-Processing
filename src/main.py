@@ -39,8 +39,7 @@ def main():
     try:
         with Image.open(in_file) as img_file:
             img = np.array(img_file, dtype="uint8")
-            file_size = round(in_file.stat().st_size / 1024, 1)
-            print(f"Loaded image: {in_file.name} ({img.shape[1]}x{img.shape[0]}), {file_size} KB")
+            print(f"Loaded image: {in_file.name} ({img.shape[1]}x{img.shape[0]}), {get_file_size(in_file)}")
 
     except UnidentifiedImageError:
         print(f"File is not a valid image: {in_file}")
@@ -68,8 +67,7 @@ def main():
     try:
         with Image.fromarray(img) as img_file:
             img_file.save(out_file)
-            file_size = round(out_file.stat().st_size / 1024, 1)
-            print(f"Saved image: {out_file.name} ({img.shape[1]}x{img.shape[0]}), {file_size} KB")
+            print(f"Saved image: {out_file.name} ({img.shape[1]}x{img.shape[0]}), {get_file_size(out_file)}")
 
     except ValueError:
         print(f"Unrecognized output format: {out_file.suffix}")
@@ -98,11 +96,7 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace) -> np.ndar
 
     match op_name:
         case "boxblur":
-            if args.radius > 5:
-                raise ValueError("Radius should be at most 5")
-            kernel_size = args.radius * 2 + 1
-            kernel = np.ones((kernel_size, kernel_size)) / (kernel_size ** 2)
-            img = op.convolve(img, kernel, args.iterations)
+            img = op.box_blur(img, args.radius, args.passes)
 
         case "chain":
             pass
@@ -156,6 +150,29 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace) -> np.ndar
             raise ValueError(f"Unrecognized operation: {op_name}")
 
     return img
+
+
+def get_file_size(file: Path) -> str:
+    """Returns the size of a file in relevant units.
+
+    Args:
+        file (Path): The file to get the size of
+
+    Returns:
+        str: The size of the file in relevant units
+    """
+    if not file.is_file():
+        raise ValueError(f"File not found: {file}")
+
+    size = file.stat().st_size
+    if size < 1024:
+        return f"{size} B"
+    elif size < 1024 ** 2:
+        return f"{round(size / 1024, 1)} KB"
+    elif size < 1024 ** 3:
+        return f"{round(size / 1024 ** 2, 1)} MB"
+    else:
+        return f"{round(size / 1024 ** 3, 1)} GB"
 
 
 if __name__ == "__main__":

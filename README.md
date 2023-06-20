@@ -51,43 +51,35 @@ Install dependencies
 List all available operations
 
 ```bash
-  python src/main.py -h
+  python src/main.py --help
 ```
 
 Show arguments for a given operation
 
 ```bash
-  python src/main.py <in-file-path> <out-file-name> <operation> -h
+  python src/main.py <in-file-path> <out-file-name> <operation> --help
 ```
 
-Example: Crop `/img-editor/tests/images/logo.png` to within corners (100, 100) and (300, 300)
+Example: Rotate `D:\Downloads\logo.png` by 180 degrees and save as `flipped.png`
 
 ```bash
-  python src/main.py tests/images/logo.png out.png crop 100 100 300 300
+  python src/main.py "D:\Downloads\small.png" flipped.png rotateCW --turns 2
 ```
 
-You may also use absolute file paths, for example:  `"C:\...\logo.png"`  
+You may also use relative file paths, for example:  `tests/logo.png`  
 Output file is saved in the same directory as the input file.
 
-Input: `/tests/images/logo.png`
-![/pics/logo.png](https://i.imgur.com/Yhkyi1G.png)
-
-Output `/tests/images/out.png`
-
-![/pics/out.png](https://i.imgur.com/1W2HwAN.png)
-
-## Contributing
-
-Since this is a personal showcase project, I kindly ask that you do not submit pull requests.  
-If you try the program and would like to report a bug, you are welcome to open an issue, but please do not use this to suggest features.  
+`D:\Downloads\logo.png`  |  `D:\Downloads\flipped.png`
+:-------------------------:|:-------------------------:
+![Original Logo Image](https://i.imgur.com/cKBXnKi.png) | ![Flipped Logo Image](https://i.imgur.com/OBnyQbF.png)
 
 ## License and Reuse
 
 Copyright (C) 2023  Cullen St-Clair  
+Licensed under the GNU GPL v3.0 License.  
+Take a look at the [LICENSE](https://github.com/CullenStClair/img-editor/blob/master/LICENSE) file for detailed information.
 
-Take a look at the [LICENSE](https://github.com/CullenStClair/img-editor/blob/master/LICENSE) file.
+## Contributing
 
-## Acknowledgements
-
-Test images graciously provided by [Pexels](https://www.pexels.com/).  
-Please see the [ATTRIBUTIONS](https://github.com/CullenStClair/img-editor/blob/master/ATTRIBUTIONS.md) file.
+Since this is a personal showcase project, please do not submit pull requests.  
+If you try the program and would like to report a bug, you are welcome to open an issue.

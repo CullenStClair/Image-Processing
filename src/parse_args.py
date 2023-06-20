@@ -8,7 +8,7 @@ from argparse import ArgumentParser, ArgumentTypeError, Namespace
 def parse_args() -> Namespace:
     """Parse command-line arguments, handling multiple sub-commands with options.
 
-    boxblur       [-r, --radius <blur-radius>] [-i, --iterations <iterations>]
+    boxblur       [-r, --radius <blur-radius>] [-p, --passes <blur-passes>]
     chain         <operation> [<operation> ...]
     composite     <input-file-2> [-a, --alpha <alpha-value>] [-o, --offset <x-offset> <y-offset>]
     concat        [input-file-2] {--above | --below | --left | --right} {--scale | --crop | --fill}
@@ -44,8 +44,8 @@ def parse_args() -> Namespace:
     parser_op_boxblur = subparsers.add_parser("boxblur", help="Blur the image with a box blur")
     parser_op_boxblur.add_argument("-r", "--radius", metavar="<blur-radius>", type=_positive_int,
                                    default=1, help="Radius of pixel sampling (default: 1, max: 5)")
-    parser_op_boxblur.add_argument("-i", "--iterations", metavar="<blur-iterations>",
-                                   type=_positive_int, default=1, help="Number of blur passes (default: 1)")
+    parser_op_boxblur.add_argument("-p", "--passes", metavar="<blur-passes>",
+                                   type=_positive_int, default=1, help="Number of times to apply blur (default: 1)")
 
     # Chain (only operations that do not require additional arguments can be chained)
     # Valid operations: grayscale, threshold, sepia, blur, sharpen, edge, invert, mirrorV, mirrorH, rotateCW, rotateCCW

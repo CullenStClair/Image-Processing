@@ -51,5 +51,5 @@ def convolve(img: np.ndarray, kernel: np.ndarray, passes: int = 1) -> np.ndarray
     if alpha is not None:
         img = np.dstack((img, alpha))
 
-    # Convert back to uint8 from float64
+    # Convert back to uint8
     return img.astype(np.uint8)

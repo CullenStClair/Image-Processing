@@ -1,7 +1,5 @@
 venv
 .vscode
 __pycache__
-tests/images/*
-!tests/images/logo.png
-!tests/images/mountain.jpg
-!tests/images/oxford.jpg
+tests/*
+!tests/logo.png
