@@ -5,6 +5,7 @@
 from .box_blur import box_blur
 from .convolve import convolve
 from .crop import crop
+from .edge import edge
 from .grayscale import grayscale
 from .mirror import mirror
 from .rotate import rotate

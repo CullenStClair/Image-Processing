@@ -11,7 +11,7 @@ def convolve(img: np.ndarray, kernel: np.ndarray, passes: int = 1) -> np.ndarray
 
     Args:
         img (np.ndarray): The image to convolve
-        kernel (np.ndarray): The kernel to convolve with
+        kernel (np.ndarray): The kernel to convolve with (internally flipped in both axes)
         passes (int, optional): The number of times to convolve the image. Defaults to 1
 
     Returns:
@@ -29,27 +29,43 @@ def convolve(img: np.ndarray, kernel: np.ndarray, passes: int = 1) -> np.ndarray
     img = img.astype(np.float64)
     kernel = kernel.astype(np.float64)
 
-    # Extract colour channels from the image
-    red = img[..., 0]
-    green = img[..., 1]
-    blue = img[..., 2]
+    # Extract alpha channel if necessary
     if img.shape[2] == 4:
         alpha = img[..., 3]
     else:
         alpha = None
 
-    # Perform the convolution
-    for _ in range(passes):
-        red = convolve2d(red, kernel, mode="same", boundary="symm")
-        green = convolve2d(green, kernel, mode="same", boundary="symm")
-        blue = convolve2d(blue, kernel, mode="same", boundary="symm")
+    # Shortcut if image is grayscale
+    if np.array_equal(img[..., 0], img[..., 1]) and np.array_equal(img[..., 0], img[..., 2]):
+        # Perform the convolution
+        gray = img[..., 0]
+        for _ in range(passes):
+            gray = convolve2d(gray, kernel, mode="same", boundary="symm")
 
-    # Recombine colour channels
-    img = np.dstack((red, green, blue))
+        # Rebuild three colour channels for compatibility with other operations
+        img = np.dstack((gray, gray, gray))
+
+    else:
+        # Extract colour channels from the image
+        red = img[..., 0]
+        green = img[..., 1]
+        blue = img[..., 2]
+
+        # Perform the convolution
+        for _ in range(passes):
+            red = convolve2d(red, kernel, mode="same", boundary="symm")
+            green = convolve2d(green, kernel, mode="same", boundary="symm")
+            blue = convolve2d(blue, kernel, mode="same", boundary="symm")
+
+        # Recombine colour channels
+        img = np.dstack((red, green, blue))
 
     # Add the alpha channel back in if necessary
     if alpha is not None:
         img = np.dstack((img, alpha))
+
+    # Clip values to the range [0, 255] before converting back to uint8
+    np.clip(img, 0, 255, out=img)
 
     # Convert back to uint8
     return img.astype(np.uint8)

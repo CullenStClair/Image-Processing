@@ -21,9 +21,8 @@ import numpy as np
 from PIL import Image, UnidentifiedImageError
 
 import operations as op
-
-from .parse_args import parse_args
-from .utils import get_file_size
+from parse_args import parse_args
+from utils import get_file_size
 
 
 def main():
@@ -40,7 +39,7 @@ def main():
     # Read the input image contents into a numpy array
     try:
         with Image.open(in_file) as img_file:
-            img = np.array(img_file, dtype="uint8")
+            img = np.array(img_file, dtype=np.uint8)
             print(f"Loaded image: {in_file.name} ({img.shape[1]}x{img.shape[0]}), {get_file_size(in_file)}")
 
     except UnidentifiedImageError:
@@ -120,7 +119,10 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
             img = op.crop(img, args.x1, args.y1, args.x2, args.y2)
 
         case "edge":
-            pass
+            if args is None:
+                img = op.edge(img)
+            else:
+                img = op.edge(img, args.thin)
 
         case "grayscale":
             img = op.grayscale(img)

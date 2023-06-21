@@ -22,10 +22,16 @@ def grayscale(img: np.ndarray) -> np.ndarray:
     # Gamma-corrected grayscale (weighted colour channels, vectorized for speed)
     gray = np.dot(img[..., :3], [0.2989, 0.5870, 0.1140])
 
+    # Rebuild three colour channels for compatibility with other operations
+    gray = np.dstack((gray, gray, gray))
+
     # Add the alpha channel back in if necessary
     if img.shape[2] == 4:
         alpha = img[..., 3]
-        gray = np.dstack((gray, gray, gray, alpha))
+        gray = np.dstack((gray, alpha))
+
+    # Clip values to the range [0, 255] before converting back to uint8
+    np.clip(gray, 0, 255, out=gray)
 
     # Convert back to uint8
     return gray.astype(np.uint8)

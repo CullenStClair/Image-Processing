@@ -4,7 +4,7 @@
 
 from argparse import ArgumentParser, Namespace
 
-from .utils import non_negative_int, positive_float, positive_int, valid_alpha
+from utils import non_negative_int, positive_float, positive_int, valid_alpha
 
 
 def parse_args() -> Namespace:

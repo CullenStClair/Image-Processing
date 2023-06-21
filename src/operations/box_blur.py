@@ -19,6 +19,7 @@ def box_blur(img: np.ndarray, radius: int = 1, passes: int = 1) -> np.ndarray:
         np.ndarray: The blurred image
     """
 
+    # Limit the radius to 5 for performance reasons
     if radius > 5:
         raise ValueError("Radius should be at most 5")
 
@@ -26,4 +27,5 @@ def box_blur(img: np.ndarray, radius: int = 1, passes: int = 1) -> np.ndarray:
     kernel_size = radius * 2 + 1
     kernel = np.full((kernel_size, kernel_size), 1 / kernel_size ** 2)
 
+    # Convolve the image with the kernel
     return convolve(img, kernel, passes)
