@@ -51,19 +51,19 @@ Install dependencies
 List all available operations
 
 ```bash
-  python src/main.py --help
+  python main.py --help
 ```
 
 Show usage and details for a given operation
 
 ```bash
-  python src/main.py <in-file-path> <out-file-name> <operation> --help
+  python main.py <in-file-path> <out-file-name> <operation> --help
 ```
 
 Example: Rotate `D:\Downloads\logo.png` by 180 degrees and save as `flipped.png`
 
 ```bash
-  python src/main.py "D:\Downloads\small.png" flipped.png rotateCW --turns 2
+  python main.py "D:\Downloads\small.png" flipped.png rotateCW --turns 2
 ```
 
 You may also use relative file paths, for example:  `tests/logo.png`  
