@@ -9,12 +9,12 @@ from .grayscale import grayscale
 from .threshold import threshold
 
 
-def edge(img: np.ndarray, trim: bool = False) -> np.ndarray:
+def edge(img: np.ndarray, cutoff: int = 150) -> np.ndarray:
     """Applies edge detection to an image using a Sobel filter.
 
     Args:
         img (np.ndarray): The image to apply edge detection to
-        trim (bool, optional): Whether to apply edge trimming post-processing. Defaults to False
+        cutoff (int, optional): The threshold to use for edge detection. Defaults to 150.
 
     Returns:
         np.ndarray: The edge-detected image
@@ -44,11 +44,7 @@ def edge(img: np.ndarray, trim: bool = False) -> np.ndarray:
     np.clip(img, 0, 255, out=img)
 
     # Threshold the image to reduce noise
-    img = threshold(img)
-
-    # Apply edge trimming if specified
-    if trim:
-        pass
+    img = threshold(img, cutoff)
 
     # Convert back to uint8
     return img.astype(np.uint8)

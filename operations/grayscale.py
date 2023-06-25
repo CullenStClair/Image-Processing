@@ -30,7 +30,7 @@ def grayscale(img: np.ndarray) -> np.ndarray:
         alpha = img[..., 3]
         gray = np.dstack((gray, alpha))
 
-    # Clip values to the range [0, 255] before converting back to uint8
+    # Clip values to the range [0, 255]
     np.clip(gray, 0, 255, out=gray)
 
     # Convert back to uint8

@@ -60,7 +60,7 @@ def valid_alpha(value):
     try:
         fvalue = float(value)
     except ValueError:
-        raise ArgumentTypeError(f"'{value}' is an invalid alpha value (must be in range [0-1])")
+        raise ArgumentTypeError(f"'{value}' is an invalid value (must be in range [0-1])")
     if fvalue < 0 or fvalue > 1:
-        raise ArgumentTypeError(f"'{value}' is an invalid alpha value (must be in range [0-1])")
+        raise ArgumentTypeError(f"'{value}' is an invalid value (must be in range [0-1])")
     return fvalue

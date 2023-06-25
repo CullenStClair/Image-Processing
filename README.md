@@ -24,7 +24,7 @@ Built as a personal project with the purpose of learning and using NumPy.
   - Concatenating
   - Convolving (With a Custom Kernel)
   - Edge Detection
-  - Thresholding (Binary Segmentation)
+  - Thresholding (Colour or Black and White)
 
 ## Set Up Locally
 

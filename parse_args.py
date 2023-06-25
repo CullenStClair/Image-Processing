@@ -16,7 +16,7 @@ def parse_args() -> Namespace:
     concat        [input-file-2] {--above | --below | --left | --right} {--scale | --crop | --fill}
     convolve        <kernel-file> [-i, --iterations <iterations>]
     crop          <x1> <y1> <x2> <y2>
-    edge          [-t, --thin]
+    edge          [-t, --threshold <threshold-value>]
     grayscale     
     invert
     mirrorH
@@ -26,7 +26,7 @@ def parse_args() -> Namespace:
     rotateCCW     [-t, --turns <turns>]
     sepia         
     sharpen       [-s, --strength <sharpness-strength>]
-    threshold     [-t, --threshold <threshold-value>] [-i, --invert]
+    threshold     [-t, --threshold <threshold-value>] [-b, --binary] [-i, --invert]
     """
 
     parser = ArgumentParser(description="A python program for image processing.")
@@ -41,10 +41,10 @@ def parse_args() -> Namespace:
     # indicates which sub-command was specified
     subparsers = parser.add_subparsers(dest="operation", required=True, help="Operation")
 
-    # Sub-commands
+    # Sub-command parsers
     # Boxblur
     parser_op_boxblur = subparsers.add_parser("boxblur", help="Blur the image with a box blur")
-    parser_op_boxblur.add_argument("-r", "--radius", metavar="<blur-radius>", type=positive_int,
+    parser_op_boxblur.add_argument("-r", "--radius", metavar="<blur-radius>", type=int, choices=range(1, 6),
                                    default=1, help="Radius of pixel sampling (default: 1, max: 5)")
     parser_op_boxblur.add_argument("-p", "--passes", metavar="<blur-passes>",
                                    type=positive_int, default=1, help="Number of times to apply blur (default: 1)")
@@ -108,8 +108,8 @@ def parse_args() -> Namespace:
 
     # Edge
     parser_op_edge = subparsers.add_parser("edge", help="Apply edge detection to the image")
-    parser_op_edge.add_argument("-t", "--thin", action="store_true", default=False,
-                                help="Apply edge thinning post-processing")
+    parser_op_edge.add_argument("-t", "--threshold", metavar="<threshold-value>", type=int, choices=range(256),
+                                default=150, help="Threshold value [0-255] (lower = more 'edges', default: 150)")
 
     # Grayscale
     parser_op_grayscale = subparsers.add_parser("grayscale", help="Grayscale the image")
@@ -145,8 +145,10 @@ def parse_args() -> Namespace:
     # Threshold
     parser_op_threshold = subparsers.add_parser("threshold", help="Threshold filter the image")
     parser_op_threshold.add_argument("-t", "--threshold", metavar="<threshold-value>", type=int,
-                                     choices=range(0, 256), default=128, help="Threshold value [0-255] (default: 128)")
-    parser_op_threshold.add_argument("-i", "--invert", action="store_true",
-                                     default=False, help="Invert the threshold operation (above threshold -> black)")
+                                     choices=range(0, 256), default=128, help="Threshold cutoff value [0-255] (default: 128)")
+    parser_op_threshold.add_argument("-b", "--binary", action="store_true", default=False,
+                                     help="Perform binary segmentation (black and white, default: False)")
+    parser_op_threshold.add_argument("-i", "--invert", action="store_true", default=False,
+                                     help="Invert the threshold operation (above cutoff -> black)")
 
     return parser.parse_args()

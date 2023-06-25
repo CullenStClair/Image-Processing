@@ -122,7 +122,7 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
             if args is None:
                 img = op.edge(img)
             else:
-                img = op.edge(img, args.thin)
+                img = op.edge(img, args.threshold)
 
         case "grayscale":
             img = op.grayscale(img)
@@ -161,7 +161,10 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
             pass
 
         case "threshold":
-            pass
+            if args is None:
+                img = op.threshold(img)
+            else:
+                img = op.threshold(img, args.threshold, args.binary, args.invert)
 
         case _:
             raise ValueError(f"Unrecognized operation: {op_name}")
