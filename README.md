@@ -60,7 +60,9 @@ Show usage and details for a given operation
   python main.py <in-file-path> <out-file-name> <operation> --help
 ```
 
-Example: Rotate `D:\Downloads\logo.png` by 180 degrees and save as `flipped.png`
+### Example
+
+Rotate `D:\Downloads\logo.png` by 180 degrees and save as `flipped.png`
 
 ```bash
   python main.py "D:\Downloads\small.png" flipped.png rotateCW --turns 2
