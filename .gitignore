@@ -1,5 +1,7 @@
 venv
 .vscode
 __pycache__
-tests/*
+tests/*.png
+tests/*.jpg
 !tests/logo.png
+!tests/tiny_test.png

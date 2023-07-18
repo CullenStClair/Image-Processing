@@ -76,8 +76,13 @@ def main():
 
     except OSError:
         print(f"Unable to save file: {out_file}")
-        if img.shape[2] == 4:  # Check if image has alpha channel
+
+        if '/' in out_file:  # Warn about invalid file path
+            print("Output file path may be invalid. Relative paths begin from the input file's directory.")
+
+        if img.shape[2] == 4 and out_file.suffix.lower() not in [".png", ".tiff"]:  # Warn about transparency
             print("Image has transparency. Try saving as another format (e.g. PNG)")
+
         exit(1)
 
 
