@@ -2,7 +2,7 @@
 #  Licensed Under the GNU GPL v3.0 License
 #  See LICENSE for more information
 
-name: Test Suite
+name: CI Test Suite
 
 on:
   push:
