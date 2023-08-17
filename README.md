@@ -8,20 +8,17 @@ Built as a personal project with the purpose of learning and using NumPy.
 
 - Supports reading and writing most common image formats
 - Provides optional settings for tweaking certain operations
-- Common image processing operations:
+- Supported Operations:
   - Box Blurring
   - Cropping
   - Grayscaling
   - Inverting Colours
   - Mirroring (Horizontal and Vertical)
-  - Resizing (Scaling)
   - Rotating (Clockwise and Counterclockwise)
   - Sepia Toning
   - Sharpening
-- Advanced image processing operations:
   - Chain (Queue Multiple Operations)
   - Compositing (Alpha Blending)
-  - Concatenating
   - Convolving (With a Custom Kernel)
   - Edge Detection
   - Thresholding (Colour or Black and White)
@@ -84,4 +81,4 @@ Take a look at the [LICENSE](https://github.com/CullenStClair/img-editor/blob/ma
 ## Contributing
 
 Since this is a personal project, please do not submit pull requests.  
-If you try the program and would like to report a bug, you are welcome to open an issue.
+Thanks for checking it out!

@@ -13,7 +13,6 @@ def parse_args() -> Namespace:
     boxblur       [-r, --radius <blur-radius>] [-p, --passes <blur-passes>]
     chain         <operation> [<operation> ...]
     composite     <input-file-2> [-a, --alpha <alpha-value>] [-o, --offset <x-offset> <y-offset>]
-    concat        [input-file-2] {--above | --below | --left | --right} {--scale | --crop | --fill}
     convolve        <kernel-file> [-i, --iterations <iterations>]
     crop          <x1> <y1> <x2> <y2>
     edge          [-t, --threshold <threshold-value>]
@@ -21,7 +20,6 @@ def parse_args() -> Namespace:
     invert
     mirrorH
     mirrorV
-    resize        <width> <height>
     rotateCW      [-t, --turns <turns>]
     rotateCCW     [-t, --turns <turns>]
     sepia         
@@ -65,30 +63,6 @@ def parse_args() -> Namespace:
     parser_op_merge.add_argument("-o", "--offset", metavar="<x-offset> <y-offset>", nargs=2, type=int,
                                  default=[0, 0], help="Offset of top image from top-left corner of bottom image (default: 0 0)")
 
-    # Concat
-    parser_op_concat = subparsers.add_parser("concat", help="Concatenate two images or tile the same image")
-    # The second image is optional, in which case the first image is tiled
-    parser_op_concat.add_argument("in_file2", metavar="<second-image-path>", default=None,
-                                  nargs="?", help="File path of image to be placed next to first image (optional)")
-    placement_group = parser_op_concat.add_mutually_exclusive_group(required=True)
-    # Where to place the second image relative to the first image
-    placement_group.add_argument("--above", action="store_const", dest="placement",
-                                 const="above", help="Place image 2 above image 1")
-    placement_group.add_argument("--below", action="store_const", dest="placement",
-                                 const="below", help="Place image 2 below image 1")
-    placement_group.add_argument("--left", action="store_const", dest="placement",
-                                 const="left", help="Place image 2 to the left of image 1")
-    placement_group.add_argument("--right", action="store_const", dest="placement",
-                                 const="right", help="Place image 2 to the right of image 1")
-    mode_group = parser_op_concat.add_mutually_exclusive_group(required=True)
-    # How to handle the second image if it does not fit exactly
-    mode_group.add_argument("--scale", action="store_const", dest="mode", const="scale",
-                            help="Scale the second image to match the bordering dimension of the first image")
-    mode_group.add_argument("--crop", action="store_const", dest="mode", const="crop",
-                            help="Crop the second image to match the bordering dimension of the first image")
-    mode_group.add_argument("--fill", action="store_const", dest="mode", const="fill",
-                            help="Fill unused space with the average colour of the second image")
-
     # Convolve
     parser_op_convolve = subparsers.add_parser(
         "convolve", help="Perform a convolution on the image with the given 2d kernel")
@@ -120,11 +94,6 @@ def parse_args() -> Namespace:
     # Mirror vertical and horizontal
     parser_op_mirrorH = subparsers.add_parser("mirrorH", help="Mirror the image horizontally")
     parser_op_mirrorV = subparsers.add_parser("mirrorV", help="Mirror the image vertically")
-
-    # Resize
-    parser_op_resize = subparsers.add_parser("resize", help="Resize the image to the given dimensions")
-    parser_op_resize.add_argument("width", metavar="<width>", type=positive_int, help="New image width")
-    parser_op_resize.add_argument("height", metavar="<height>", type=positive_int, help="New image height")
 
     # Rotate clockwise and counter-clockwise
     parser_op_rotateCW = subparsers.add_parser("rotateCW", help="Rotate the image 90 degrees clockwise")
