@@ -77,7 +77,7 @@ def main():
     except OSError:
         print(f"Unable to save file: {out_file}")
 
-        if '/' in out_file:  # Warn about invalid file path
+        if '/' in args.out_file or '\\' in args.out_file:  # Warn about invalid file path
             print("Output file path may be invalid. Relative paths begin from the input file's directory.")
 
         if img.shape[2] == 4 and out_file.suffix.lower() not in [".png", ".tiff"]:  # Warn about transparency
@@ -117,9 +117,6 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
         case "composite":
             pass
 
-        case "concat":
-            pass
-
         case "crop":
             img = op.crop(img, args.x1, args.y1, args.x2, args.y2)
 
@@ -133,9 +130,9 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
             img = op.grayscale(img)
 
         case "invert":
-            pass
+            img = op.invert(img)
 
-        case "kernel":
+        case "convolve":
             pass
 
         case "mirrorH":
@@ -143,9 +140,6 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
 
         case "mirrorV":
             img = op.mirror(img, vertical=True)
-
-        case "resize":
-            pass
 
         case "rotateCW":
             if args is None:
@@ -163,7 +157,10 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
             pass
 
         case "sharpen":
-            pass
+            if args is None:
+                pass
+            else:
+                pass
 
         case "threshold":
             if args is None:
