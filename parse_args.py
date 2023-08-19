@@ -13,7 +13,7 @@ def parse_args() -> Namespace:
     boxblur       [-r, --radius <blur-radius>] [-p, --passes <blur-passes>]
     chain         <operation> [<operation> ...]
     composite     <input-file-2> [-a, --alpha <alpha-value>] [-o, --offset <x-offset> <y-offset>]
-    convolve        <kernel-file> [-i, --iterations <iterations>]
+    convolve        <kernel-size> [-i, --iterations <iterations>]
     crop          <x1> <y1> <x2> <y2>
     edge          [-t, --threshold <threshold-value>]
     grayscale     
@@ -65,9 +65,9 @@ def parse_args() -> Namespace:
 
     # Convolve
     parser_op_convolve = subparsers.add_parser(
-        "convolve", help="Perform a convolution on the image with the given 2d kernel")
-    parser_op_convolve.add_argument("kernel_file", metavar="<kernel-file>",
-                                    help="File path of 2d kernel to use in convolution (comma-separated values in .txt/.csv)")
+        "convolve", help="Perform a convolution on the image with the given square kernel")
+    parser_op_convolve.add_argument("kernel_size", metavar="<kernel-size>", type=positive_int, default=3,
+                                    help="Side length of square kernel to use in convolution (default: 3)")
     parser_op_convolve.add_argument("-i", "--iterations", metavar="<iterations>", type=positive_int, default=1,
                                     help="Number of convolution passes (default: 1)")
 
