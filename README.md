@@ -10,17 +10,17 @@ Built as a personal project with the purpose of learning and using NumPy.
 - Provides optional settings for tweaking certain operations
 - Supported Operations:
   - Box Blurring
+  - Chain (Queue Multiple Operations)
+  - Compositing (Alpha Blending)
+  - Convolving (With a Custom Kernel)
   - Cropping
+  - Edge Detection
   - Grayscaling
   - Inverting Colours
   - Mirroring (Horizontal and Vertical)
   - Rotating (Clockwise and Counterclockwise)
   - Sepia Toning
   - Sharpening
-  - Chain (Queue Multiple Operations)
-  - Compositing (Alpha Blending)
-  - Convolving (With a Custom Kernel)
-  - Edge Detection
   - Thresholding (Colour or Black and White)
 
 ## Set Up Locally
