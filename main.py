@@ -22,7 +22,7 @@ from PIL import Image, UnidentifiedImageError
 
 import operations as op
 from parse_args import parse_args
-from utils import get_file_size
+from utils import get_file_size, get_kernel_from_terminal
 
 
 def main():
@@ -133,7 +133,8 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
             img = op.invert(img)
 
         case "convolve":
-            pass
+            kernel = get_kernel_from_terminal(args.kernel_size)
+            img = op.convolve(img, kernel, args.iterations)
 
         case "mirrorH":
             img = op.mirror(img)
@@ -175,4 +176,8 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\nExiting...")
+        exit(0)

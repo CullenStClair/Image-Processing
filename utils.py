@@ -12,14 +12,14 @@ def get_kernel_from_terminal(kernel_size: int) -> np.ndarray:
     """Read a square kernel from the terminal row by row."""
     kernel = np.zeros((kernel_size, kernel_size), dtype=np.float64)
     for i in range(kernel_size):
-        row = input(f"Enter row {i + 1} of the kernel: ")
+        row = input(f"Enter row {i + 1} of the kernel: ").replace(",", "")
         row = row.split()
         if len(row) != kernel_size:
             raise ValueError(f"Row length must be {kernel_size}")
         try:
             kernel[i] = [float(x) for x in row]
         except ValueError:
-            raise ValueError("Invalid kernel value(s) provided")
+            raise ValueError("Invalid kernel input format or values provided")
     return kernel
 
 
