@@ -1,6 +1,8 @@
 
 # Python Image Editor
 
+[![CI Test Suite](https://github.com/CullenStClair/img-editor/actions/workflows/run-tests.yml/badge.svg)](https://github.com/CullenStClair/img-editor/actions/workflows/run-tests.yml)
+
 A command line interface for performing image processing tasks.  
 Built as a personal project with the purpose of learning and using NumPy.
 
