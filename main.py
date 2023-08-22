@@ -141,7 +141,8 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
 
         case "convolve":
             if args is None:
-                raise ValueError("Convolve operation requires arguments")
+                kernel = get_kernel_from_terminal(3)
+                img = op.convolve(img, kernel)
             else:
                 kernel = get_kernel_from_terminal(args.kernel_size)
                 img = op.convolve(img, kernel, args.iterations)
