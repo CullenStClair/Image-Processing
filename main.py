@@ -52,7 +52,7 @@ def main():
 
     except ValueError as e:
         print("[ERROR]", e)
-        print("Use the --help flag for usage information")
+        print("Use the --help flag for usage information about the requested operation.")
         print("Exiting...")
         exit(1)
 
@@ -98,9 +98,8 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
         np.ndarray: The image array after the operation has been performed
     """
 
-    # use default arguments if none are provided (only the case for chain operations)
-    # this allows the perform_operation function to be re-used for the chain operation
-    # argparse already rejects unsupported chain operations, so no need to check for them here
+    # check for None args to determine if this is a chain operation
+    # this allows the perform_operation function to be re-used for chaining
 
     print(f"Performing operation: {op_name}")
 
@@ -112,13 +111,22 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
                 img = op.box_blur(img, args.radius, args.passes)
 
         case "chain":
-            pass
+            if args is None:
+                raise ValueError("Chain operation not supported in chain mode")
+            else:
+                pass
 
         case "composite":
-            pass
+            if args is None:
+                raise ValueError("Composite operation not supported in chain mode")
+            else:
+                pass
 
         case "crop":
-            img = op.crop(img, args.x1, args.y1, args.x2, args.y2)
+            if args is None:
+                raise ValueError("Crop operation not supported in chain mode")
+            else:
+                img = op.crop(img, args.x1, args.y1, args.x2, args.y2)
 
         case "edge":
             if args is None:
@@ -133,8 +141,11 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
             img = op.invert(img)
 
         case "convolve":
-            kernel = get_kernel_from_terminal(args.kernel_size)
-            img = op.convolve(img, kernel, args.iterations)
+            if args is None:
+                raise ValueError("Convolve operation not supported in chain mode")
+            else:
+                kernel = get_kernel_from_terminal(args.kernel_size)
+                img = op.convolve(img, kernel, args.iterations)
 
         case "mirrorH":
             img = op.mirror(img)

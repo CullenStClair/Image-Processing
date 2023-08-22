@@ -47,7 +47,7 @@ def parse_args() -> Namespace:
     parser_op_boxblur.add_argument("-p", "--passes", metavar="<blur-passes>",
                                    type=positive_int, default=1, help="Number of times to apply blur (default: 1)")
 
-    # Chain (only operations that do not require additional arguments can be chained)
+    # Chain (convolve, crop, composite, and chain can't be used in chain mode)
     # Valid operations: grayscale, threshold, sepia, blur, sharpen, edge, invert, mirrorV, mirrorH, rotateCW, rotateCCW
     parser_op_chain = subparsers.add_parser("chain", help="Apply multiple operations (without arguments) to the image")
     parser_op_chain.add_argument("operations", metavar="<operation>", nargs="+", help="Operations to apply in sequence",
