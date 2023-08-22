@@ -22,7 +22,7 @@ Built as a personal project with the purpose of learning and using NumPy.
   - Mirroring (Horizontal and Vertical)
   - Rotating (Clockwise and Counterclockwise)
   - Sepia Toning
-  - Sharpening
+  - Sharpening (Unsharp Masking)
   - Thresholding (Colour or Black and White)
 
 ## Set Up Locally
@@ -61,16 +61,16 @@ Show usage and details for a given operation
 
 ### Example
 
-Rotate `D:\Downloads\logo.png` by 180 degrees and save as `flipped.png`
+Rotate `C:\Downloads\logo.png` by 180 degrees and save as `C:\Downloads\flipped.png`
 
 ```bash
-  python main.py "D:\Downloads\small.png" flipped.png rotateCW --turns 2
+  python main.py "C:\Downloads\small.png" flipped.png rotateCW --turns 2
 ```
 
 You may also use relative file paths, for example:  `tests/logo.png`  
-Output file is saved in the same directory as the input file.
+The output file is saved in the same directory as the input file.
 
-`D:\Downloads\logo.png`  |  `D:\Downloads\flipped.png`
+`C:\Downloads\logo.png`  |  `C:\Downloads\flipped.png`
 :-------------------------:|:-------------------------:
 ![Original Logo Image](https://i.imgur.com/cKBXnKi.png) | ![Flipped Logo Image](https://i.imgur.com/OBnyQbF.png)
 
