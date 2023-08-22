@@ -98,11 +98,10 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
         np.ndarray: The image array after the operation has been performed
     """
 
-    # check for None args to determine if this is a chain operation
-    # this allows the perform_operation function to be re-used for chaining
-
     print(f"Performing operation: {op_name}")
 
+    # check for None args to use default arguments
+    # this allows the perform_operation function to be re-used for chaining
     match op_name:
         case "boxblur":
             if args is None:
@@ -112,19 +111,19 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
 
         case "chain":
             if args is None:
-                raise ValueError("Chain operation not supported in chain mode")
+                raise ValueError("Chain operation requires arguments")
             else:
-                pass
+                img = op.chain(img, args.operations)
 
         case "composite":
             if args is None:
-                raise ValueError("Composite operation not supported in chain mode")
+                raise ValueError("Composite operation requires arguments")
             else:
                 pass
 
         case "crop":
             if args is None:
-                raise ValueError("Crop operation not supported in chain mode")
+                raise ValueError("Crop operation requires arguments")
             else:
                 img = op.crop(img, args.x1, args.y1, args.x2, args.y2)
 
@@ -142,7 +141,7 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
 
         case "convolve":
             if args is None:
-                raise ValueError("Convolve operation not supported in chain mode")
+                raise ValueError("Convolve operation requires arguments")
             else:
                 kernel = get_kernel_from_terminal(args.kernel_size)
                 img = op.convolve(img, kernel, args.iterations)

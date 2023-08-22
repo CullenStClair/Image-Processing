@@ -3,6 +3,7 @@
 #  See LICENSE for more information
 
 from .box_blur import box_blur
+from .chain import chain
 from .convolve import convolve
 from .crop import crop
 from .edge import edge
