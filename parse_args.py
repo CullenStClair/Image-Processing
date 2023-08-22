@@ -107,9 +107,9 @@ def parse_args() -> Namespace:
     parser_op_sepia = subparsers.add_parser("sepia", help="Sepia tone the image")
 
     # Sharpen
-    parser_op_sharpen = subparsers.add_parser("sharpen", help="Sharpen the image")
-    parser_op_sharpen.add_argument("-s", "--strength", metavar="<multiplier>",
-                                   type=positive_float, default=5, help="Sharpening strength multiplier (default: 5)")
+    parser_op_sharpen = subparsers.add_parser("sharpen", help="Sharpen the image using unsharp masking")
+    parser_op_sharpen.add_argument("-a", "--amount", metavar="<multiplier>",
+                                   type=positive_float, default=3, help="Sharpening strength multiplier (default: 3)")
 
     # Threshold
     parser_op_threshold = subparsers.add_parser("threshold", help="Threshold filter the image")

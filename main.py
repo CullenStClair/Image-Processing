@@ -169,9 +169,9 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
 
         case "sharpen":
             if args is None:
-                pass
+                img = op.sharpen(img)
             else:
-                pass
+                img = op.sharpen(img, args.amount)
 
         case "threshold":
             if args is None:

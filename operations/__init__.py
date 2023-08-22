@@ -11,4 +11,5 @@ from .grayscale import grayscale
 from .invert import invert
 from .mirror import mirror
 from .rotate import rotate
+from .sharpen import sharpen
 from .threshold import threshold
