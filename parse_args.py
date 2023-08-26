@@ -55,12 +55,12 @@ def parse_args() -> Namespace:
                                           "invert", "mirrorV", "mirrorH", "rotateCW", "rotateCCW", "convolve"])
 
     # Composite
-    parser_op_merge = subparsers.add_parser("composite", help="Composite an image over another")
+    parser_op_merge = subparsers.add_parser("composite", help="Composite an image over another (premultiplied alpha)")
     parser_op_merge.add_argument("in_file2", metavar="<top-image-path>",
                                  help="File path of image to be placed over first image")
     parser_op_merge.add_argument("-a", "--alpha", metavar="<alpha-value>", type=valid_alpha,
-                                 default=0.5, help="Transparency of top image [0-1] (default: 0.5)")
-    parser_op_merge.add_argument("-o", "--offset", metavar="<x-offset> <y-offset>", nargs=2, type=int,
+                                 default=0.5, help="Transparency of top image [0-1] (default: 1)")
+    parser_op_merge.add_argument("-o", "--offset", metavar="<x-offset> <y-offset>", nargs=2, type=non_negative_int,
                                  default=[0, 0], help="Offset of top image from top-left corner of bottom image (default: 0 0)")
 
     # Convolve
