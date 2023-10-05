@@ -33,17 +33,17 @@ def main():
     # Handle input file path
     in_file = Path(args.in_file)
     if not in_file.is_file():  # Check if input file exists
-        print(f"File not found: {in_file}")
+        print(f'File not found: {in_file}')
         exit(1)
 
     # Read the input image contents into a numpy array
     try:
-        with Image.open(in_file) as img_file:
+        with Image.open(in_file) as img_file:  # reconsider use of context manager within try block
             img = np.array(img_file, dtype=np.uint8)
-            print(f"Loaded image: {in_file.name} ({img.shape[1]}x{img.shape[0]}), {get_file_size(in_file)}")
+            print(f'Loaded image: {in_file.name} ({img.shape[1]}x{img.shape[0]}), {get_file_size(in_file)}')
 
     except UnidentifiedImageError:
-        print(f"File is not a valid image: {in_file}")
+        print(f'File is not a valid image: {in_file}')
         exit(1)
 
     # Perform the requested operation(s)
@@ -51,9 +51,9 @@ def main():
         img = perform_operation(img, args.operation, args)
 
     except ValueError as e:
-        print("[ERROR]", e)
-        print("Use the --help flag for usage information about the requested operation.")
-        print("Exiting...")
+        print('[ERROR]', e)
+        print('Use the --help flag for usage information about the requested operation.')
+        print('Exiting...')
         exit(1)
 
     # Get output file path
@@ -61,27 +61,27 @@ def main():
     i = 1  # If output file already exists, append number to filename
     stem = out_file.stem
     while out_file.exists():
-        out_file = in_file.parent.joinpath(f"{stem}-{i}{out_file.suffix}")
+        out_file = in_file.parent.joinpath(f'{stem}-{i}{out_file.suffix}')
         i += 1
 
     # Save the output image
     try:
         with Image.fromarray(img) as img_file:
             img_file.save(out_file)
-            print(f"Saved image: {out_file.name} ({img.shape[1]}x{img.shape[0]}), {get_file_size(out_file)}")
+            print(f'Saved image: {out_file.name} ({img.shape[1]}x{img.shape[0]}), {get_file_size(out_file)}')
 
     except ValueError:
-        print(f"Unrecognized output format: {out_file.suffix}")
+        print(f'Unrecognized output format: {out_file.suffix}')
         exit(1)
 
     except OSError:
-        print(f"Unable to save file: {out_file}")
+        print(f'Unable to save file: {out_file}')
 
         if '/' in args.out_file or '\\' in args.out_file:  # Warn about invalid file path
             print("Output file path may be invalid. Relative paths begin from the input file's directory.")
 
-        if img.shape[2] == 4 and out_file.suffix.lower() not in [".png", ".tiff"]:  # Warn about transparency
-            print("Image has transparency. Try saving as another format (e.g. PNG)")
+        if img.shape[2] == 4 and out_file.suffix.lower() not in ['.png', '.tiff']:  # Warn about transparency
+            print('Image has transparency. Try saving as another format (e.g. PNG)')
 
         exit(1)
 
@@ -98,48 +98,48 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
         np.ndarray: The image array after the operation has been performed
     """
 
-    print(f"Performing operation: {op_name}")
+    print(f'Performing operation: {op_name}')
 
     # check for None args to use default arguments
     # this allows the perform_operation function to be re-used for chaining
     match op_name:
-        case "boxblur":
+        case 'boxblur':
             if args is None:
                 img = op.box_blur(img)
             else:
                 img = op.box_blur(img, args.radius, args.passes)
 
-        case "chain":
+        case 'chain':
             if args is None:
-                raise ValueError("Chain operation requires arguments")
+                raise ValueError('Chain operation requires arguments')
             else:
                 img = op.chain(img, args.operations)
 
-        case "composite":
+        case 'composite':
             if args is None:
-                raise ValueError("Composite operation requires arguments")
+                raise ValueError('Composite operation requires arguments')
             else:
                 pass
 
-        case "crop":
+        case 'crop':
             if args is None:
-                raise ValueError("Crop operation requires arguments")
+                raise ValueError('Crop operation requires arguments')
             else:
                 img = op.crop(img, args.x1, args.y1, args.x2, args.y2)
 
-        case "edge":
+        case 'edge':
             if args is None:
                 img = op.edge(img)
             else:
                 img = op.edge(img, args.threshold)
 
-        case "grayscale":
+        case 'grayscale':
             img = op.grayscale(img)
 
-        case "invert":
+        case 'invert':
             img = op.invert(img)
 
-        case "convolve":
+        case 'convolve':
             if args is None:
                 kernel = get_kernel_from_terminal(3)
                 img = op.convolve(img, kernel)
@@ -147,48 +147,48 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
                 kernel = get_kernel_from_terminal(args.kernel_size)
                 img = op.convolve(img, kernel, args.iterations)
 
-        case "mirrorH":
+        case 'mirrorH':
             img = op.mirror(img)
 
-        case "mirrorV":
+        case 'mirrorV':
             img = op.mirror(img, vertical=True)
 
-        case "rotateCW":
+        case 'rotateCW':
             if args is None:
                 img = op.rotate(img)
             else:
                 img = op.rotate(img, args.turns)
 
-        case "rotateCCW":
+        case 'rotateCCW':
             if args is None:
                 img = op.rotate(img, ccw=True)
             else:
                 img = op.rotate(img, args.turns, ccw=True)
 
-        case "sepia":
+        case 'sepia':
             pass
 
-        case "sharpen":
+        case 'sharpen':
             if args is None:
                 img = op.sharpen(img)
             else:
                 img = op.sharpen(img, args.amount)
 
-        case "threshold":
+        case 'threshold':
             if args is None:
                 img = op.threshold(img)
             else:
                 img = op.threshold(img, args.threshold, args.binary, args.invert)
 
         case _:
-            raise ValueError(f"Unrecognized operation: {op_name}")
+            raise ValueError(f'Unrecognized operation: {op_name}')
 
     return img
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        print("\nExiting...")
+        print('\nExiting...')
         exit(0)
