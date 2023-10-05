@@ -30,7 +30,7 @@ Built as a personal project with the purpose of learning and using NumPy.
 Clone the project
 
 ```bash
-  git clone https://github.com/CullenStClair/img-editor
+  git clone https://github.com/CullenStClair/img-editor.git
 ```
 
 Go to the project directory "img-editor"
