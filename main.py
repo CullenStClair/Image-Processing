@@ -1,4 +1,4 @@
-#  A command line interface for common image editing tasks.
+#  A command line interface for common image processing tasks.
 #  Copyright (C) 2023  Cullen St-Clair
 
 #  This program is free software: you can redistribute it and/or modify
@@ -33,17 +33,17 @@ def main():
     # Handle input file path
     in_file = Path(args.in_file)
     if not in_file.is_file():  # Check if input file exists
-        print(f'File not found: {in_file}')
+        print(f"File not found: {in_file}")
         exit(1)
 
     # Read the input image contents into a numpy array
     try:
         with Image.open(in_file) as img_file:  # reconsider use of context manager within try block
             img = np.array(img_file, dtype=np.uint8)
-            print(f'Loaded image: {in_file.name} ({img.shape[1]}x{img.shape[0]}), {get_file_size(in_file)}')
+            print(f"Loaded image: {in_file.name} ({img.shape[1]}x{img.shape[0]}), {get_file_size(in_file)}")
 
     except UnidentifiedImageError:
-        print(f'File is not a valid image: {in_file}')
+        print(f"File is not a valid image: {in_file}")
         exit(1)
 
     # Perform the requested operation(s)
@@ -51,9 +51,9 @@ def main():
         img = perform_operation(img, args.operation, args)
 
     except ValueError as e:
-        print('[ERROR]', e)
-        print('Use the --help flag for usage information about the requested operation.')
-        print('Exiting...')
+        print("[ERROR]", e)
+        print("Use the --help flag for usage information about the requested operation.")
+        print("Exiting...")
         exit(1)
 
     # Get output file path
@@ -68,24 +68,25 @@ def main():
     try:
         with Image.fromarray(img) as img_file:
             img_file.save(out_file)
-            print(f'Saved image: {out_file.name} ({img.shape[1]}x{img.shape[0]}), {get_file_size(out_file)}')
+            print(f"Saved image: {out_file.name} ({img.shape[1]}x{img.shape[0]}), {get_file_size(out_file)}")
 
     except ValueError:
-        print(f'Unrecognized output format: {out_file.suffix}')
+        print(f"Unrecognized output format: {out_file.suffix}")
         exit(1)
 
     except OSError:
-        print(f'Unable to save file: {out_file}')
+        print(f"Unable to save file: {out_file}")
 
-        if '/' in args.out_file or '\\' in args.out_file:  # Warn about invalid file path
+        if '/' in args.out_file or '\\' in args.out_file:  # Warn about possible invalid file path
             print("Output file path may be invalid. Relative paths begin from the input file's directory.")
 
         if img.shape[2] == 4 and out_file.suffix.lower() not in ['.png', '.tiff']:  # Warn about transparency
-            print('Image has transparency. Try saving as another format (e.g. PNG)')
+            print("Image has transparency. Try saving as another format (i.e. PNG or TIFF)")
 
         exit(1)
 
 
+# TODO: Move perform_operation to a different file
 def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> np.ndarray:
     """Performs the requested operation on the image array.
 
@@ -98,7 +99,7 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
         np.ndarray: The image array after the operation has been performed
     """
 
-    print(f'Performing operation: {op_name}')
+    print(f"Performing operation: {op_name}")
 
     # check for None args to use default arguments
     # this allows the perform_operation function to be re-used for chaining
@@ -111,19 +112,19 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
 
         case 'chain':
             if args is None:
-                raise ValueError('Chain operation requires arguments')
+                raise ValueError("Chain operation requires arguments")
             else:
                 img = op.chain(img, args.operations)
 
         case 'composite':
             if args is None:
-                raise ValueError('Composite operation requires arguments')
+                raise ValueError("Composite operation requires arguments")
             else:
-                pass
+                raise NotImplementedError("TODO")  # TODO
 
         case 'crop':
             if args is None:
-                raise ValueError('Crop operation requires arguments')
+                raise ValueError("Crop operation requires arguments")
             else:
                 img = op.crop(img, args.x1, args.y1, args.x2, args.y2)
 
@@ -166,7 +167,7 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
                 img = op.rotate(img, args.turns, ccw=True)
 
         case 'sepia':
-            pass
+            raise NotImplementedError("TODO")  # TODO
 
         case 'sharpen':
             if args is None:
@@ -181,7 +182,7 @@ def perform_operation(img: np.ndarray, op_name: str, args: Namespace = None) -> 
                 img = op.threshold(img, args.threshold, args.binary, args.invert)
 
         case _:
-            raise ValueError(f'Unrecognized operation: {op_name}')
+            raise ValueError(f"Unrecognized operation: {op_name}")
 
     return img
 
@@ -190,5 +191,5 @@ if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        print('\nExiting...')
+        print("\nExiting...")
         exit(0)

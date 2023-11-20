@@ -12,7 +12,7 @@ def get_kernel_from_terminal(kernel_size: int) -> np.ndarray:
     """Read a square kernel from the terminal row by row."""
     kernel = np.zeros((kernel_size, kernel_size), dtype=np.float64)
     for i in range(kernel_size):
-        row = input(f"Enter row {i + 1} of the kernel: ").replace(",", "")
+        row = input(f"Enter row {i + 1} of the kernel: ").replace(',', '')
         row = row.split()
         if len(row) != kernel_size:
             raise ValueError(f"Row length must be {kernel_size}")
@@ -30,13 +30,13 @@ def get_file_size(file: Path) -> str:
 
     size = file.stat().st_size
     if size < 1024:
-        return f"{size} B"
+        return f'{size} B'
     elif size < 1024 ** 2:
-        return f"{round(size / 1024, 1)} KB"
+        return f'{round(size / 1024, 1)} KB'
     elif size < 1024 ** 3:
-        return f"{round(size / 1024 ** 2, 1)} MB"
+        return f'{round(size / 1024 ** 2, 1)} MB'
     else:
-        return f"{round(size / 1024 ** 3, 1)} GB"
+        return f'{round(size / 1024 ** 3, 1)} GB'
 
 
 def non_negative_int(value):

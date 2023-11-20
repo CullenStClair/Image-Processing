@@ -18,3 +18,4 @@ def composite(img_bottom: np.ndarray, img_top: np.ndarray, alpha: int, offset_x:
     Returns:
         np.ndarray: The composited image
     """
+    raise NotImplementedError("TODO")

@@ -16,10 +16,10 @@ class TestBoxBlur(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Load the test image
-        cls.img = np.array(Image.open("tests/tiny_test.png"))
+        cls.img = np.array(Image.open('tests/tiny_test.png'))
 
-    def test_normal_case(self):
-        """Test a normal case (radius = 1, passes = 1)"""
+    def test_basic_case(self):
+        """Test a basic case (radius = 1, passes = 1)"""
 
         actual = box_blur(self.img)
 
@@ -53,5 +53,5 @@ class TestBoxBlur(unittest.TestCase):
             self.assertTrue(np.array_equal(actual_a, expected_a))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

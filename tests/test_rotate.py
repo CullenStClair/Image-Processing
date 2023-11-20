@@ -16,7 +16,7 @@ class TestCrop(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Load the test image
-        cls.img = np.array(Image.open("tests/tiny_test.png"))
+        cls.img = np.array(Image.open('tests/tiny_test.png'))
 
     def test_rotate_cw(self):
         """Test a clockwise rotation"""
@@ -43,5 +43,5 @@ class TestCrop(unittest.TestCase):
         self.assertTrue(np.array_equal(actual, expected))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

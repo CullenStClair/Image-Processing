@@ -19,8 +19,8 @@ def chain(img: np.ndarray, operations: list[str]) -> np.ndarray:
     """
 
     for operation in operations:
-        if operation in ["composite", "crop", "chain"]:
-            raise ValueError(f"Operation {operation} not supported in chain mode")
+        if operation in ['composite', 'crop', 'chain']:
+            raise ValueError(f"Operation {operation} is not supported in chain mode")
         else:
             img = perform_operation(img, operation)
 

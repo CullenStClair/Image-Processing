@@ -16,7 +16,7 @@ class TestConvolve(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Load the test image
-        cls.img = np.array(Image.open("tests/tiny_test.png"))
+        cls.img = np.array(Image.open('tests/tiny_test.png'))
         # Create a random test image
         cls.rand_img = np.random.randint(0, 256, (100, 100, 4), dtype=np.uint8)
         # Create identity kernel
@@ -35,5 +35,5 @@ class TestConvolve(unittest.TestCase):
         self.assertTrue(np.array_equal(actual, self.rand_img))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

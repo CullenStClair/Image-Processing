@@ -40,7 +40,7 @@ def convolve(img: np.ndarray, kernel: np.ndarray, passes: int = 1) -> np.ndarray
         # Perform the convolution
         gray = img[..., 0]
         for _ in range(passes):
-            gray = convolve2d(gray, kernel, mode="same", boundary="symm")
+            gray = convolve2d(gray, kernel, mode='same', boundary='symm')
 
         # Rebuild three colour channels for compatibility with other operations
         img = np.dstack((gray, gray, gray))
@@ -53,9 +53,9 @@ def convolve(img: np.ndarray, kernel: np.ndarray, passes: int = 1) -> np.ndarray
 
         # Perform the convolution
         for _ in range(passes):
-            red = convolve2d(red, kernel, mode="same", boundary="symm")
-            green = convolve2d(green, kernel, mode="same", boundary="symm")
-            blue = convolve2d(blue, kernel, mode="same", boundary="symm")
+            red = convolve2d(red, kernel, mode='same', boundary='symm')
+            green = convolve2d(green, kernel, mode='same', boundary='symm')
+            blue = convolve2d(blue, kernel, mode='same', boundary='symm')
 
         # Recombine colour channels
         img = np.dstack((red, green, blue))
