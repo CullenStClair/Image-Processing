@@ -1,7 +1,7 @@
 
-# Python Image Editor
+# Python Image Processing CLI
 
-[![CI Test Suite](https://github.com/CullenStClair/img-editor/actions/workflows/run-tests.yml/badge.svg)](https://github.com/CullenStClair/img-editor/actions/workflows/run-tests.yml)
+[![CI Test Suite](https://github.com/CullenStClair/Image-Processing/actions/workflows/run-tests.yml/badge.svg)](https://github.com/CullenStClair/Image-Processing/actions/workflows/run-tests.yml)
 
 A command line interface for performing image processing tasks.  
 Built as a personal project with the purpose of learning and using NumPy.
@@ -30,13 +30,13 @@ Built as a personal project with the purpose of learning and using NumPy.
 Clone the project
 
 ```bash
-  git clone https://github.com/CullenStClair/img-editor.git
+  git clone https://github.com/CullenStClair/Image-Processing.git
 ```
 
-Go to the project directory "img-editor"
+Go to the project directory "Image-Processing"
 
 ```bash
-  cd img-editor
+  cd Image-Processing
 ```
 
 Install dependencies
@@ -78,7 +78,7 @@ The output file is saved in the same directory as the input file.
 
 Copyright (C) 2023  Cullen St-Clair  
 Licensed under the GNU GPL v3.0 License.  
-Take a look at the [LICENSE](https://github.com/CullenStClair/img-editor/blob/master/LICENSE) file for detailed information.
+Take a look at the [LICENSE](https://github.com/CullenStClair/Image-Processing/blob/master/LICENSE) file for detailed information.
 
 ## Contributing
 
