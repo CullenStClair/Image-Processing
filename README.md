@@ -64,7 +64,7 @@ Show usage and details for a given operation
 Rotate `C:\Downloads\logo.png` by 180 degrees and save as `C:\Downloads\flipped.png`
 
 ```bash
-  python main.py "C:\Downloads\small.png" flipped.png rotateCW --turns 2
+  python main.py "C:\Downloads\logo.png" flipped.png rotateCW --turns 2
 ```
 
 You may also use relative file paths, for example:  `tests/logo.png`  
