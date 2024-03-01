@@ -37,10 +37,10 @@ def crop(img: np.ndarray, x1: int, y1: int, x2: int, y2: int) -> np.ndarray:
         raise ValueError(f"Invalid coordinates: ({x1}, {y1}) is not above and to the left of ({x2}, {y2})")
 
     elif x1 == x2:
-        raise ValueError("Invalid coordinates: sprecified region has a width of 0 pixels")
+        raise ValueError("Invalid coordinates: specified region has a width of 0 pixels")
 
     elif y1 == y2:
-        raise ValueError("Invalid coordinates: sprecified region has a height of 0 pixels")
+        raise ValueError("Invalid coordinates: specified region has a height of 0 pixels")
 
     else:
         return img[y1:y2, x1:x2]  # first dimension is height-wise, second is width-wise

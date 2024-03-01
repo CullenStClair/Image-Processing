@@ -13,7 +13,7 @@ Built as a personal project with the purpose of learning and using NumPy.
 - Supported Operations:
   - Box Blurring
   - Chain (Queue Multiple Operations)
-  - Compositing (Alpha Blending)
+  - [Coming Soon] Compositing (Alpha Blending)
   - Convolving (With a Custom Kernel)
   - Cropping
   - Edge Detection
@@ -21,7 +21,7 @@ Built as a personal project with the purpose of learning and using NumPy.
   - Inverting Colours
   - Mirroring (Horizontal and Vertical)
   - Rotating (Clockwise and Counterclockwise)
-  - Sepia Toning
+  - [Coming Soon] Sepia Toning
   - Sharpening (Unsharp Masking)
   - Thresholding (Colour or Black and White)
 
@@ -64,7 +64,7 @@ Show usage and details for a given operation
 Rotate `C:\Downloads\logo.png` by 180 degrees and save as `C:\Downloads\flipped.png`
 
 ```bash
-  python main.py "C:\Downloads\small.png" flipped.png rotateCW --turns 2
+  python main.py "C:\Downloads\logo.png" flipped.png rotateCW --turns 2
 ```
 
 You may also use relative file paths, for example:  `tests/logo.png`  
