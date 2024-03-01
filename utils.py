@@ -32,11 +32,11 @@ def get_file_size(file: Path) -> str:
     if size < 1024:
         return f'{size} B'
     elif size < 1024 ** 2:
-        return f'{round(size / 1024, 1)} KB'
+        return f'{round(size / 1024)} KB'
     elif size < 1024 ** 3:
         return f'{round(size / 1024 ** 2, 1)} MB'
     else:
-        return f'{round(size / 1024 ** 3, 1)} GB'
+        return f'{round(size / 1024 ** 3, 2)} GB'
 
 
 def non_negative_int(value):
