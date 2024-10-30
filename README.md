@@ -13,7 +13,7 @@ Built as a personal project with the purpose of learning and using NumPy.
 - Supported Operations:
   - Box Blurring
   - Chain (Queue Multiple Operations)
-  - [Coming Soon] Compositing (Alpha Blending)
+  - [To Do] Compositing (Alpha Blending)
   - Convolving (With a Custom Kernel)
   - Cropping
   - Edge Detection
@@ -21,7 +21,7 @@ Built as a personal project with the purpose of learning and using NumPy.
   - Inverting Colours
   - Mirroring (Horizontal and Vertical)
   - Rotating (Clockwise and Counterclockwise)
-  - [Coming Soon] Sepia Toning
+  - [To Do] Sepia Toning
   - Sharpening (Unsharp Masking)
   - Thresholding (Colour or Black and White)
 
